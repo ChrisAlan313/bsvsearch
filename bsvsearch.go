@@ -3,67 +3,37 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
-	"strconv"
-	"strings"
 )
 
-type verse struct {
-	book    string
-	chapter int
-	number  int
-	content string
-}
-
 func main() {
-	verses, err := loadVersesFromFile("./vuldat.txt")
-	if err != nil {
-		fmt.Println("Error occurred in loadVersesFromFile() call", err)
-	}
+	bsv := NewBible("Biblia Sacra Vulgata")
+	content := loadLinesFromFile("./vuldat_test.txt")
+	bsv, _ = bsv.Load(content)
 
-	for i := range verses {
-		fmt.Println(verses[i])
-	}
+	fmt.Printf("Bible: %v\n", bsv)
 }
 
-func createVerseFromLine(line string) verse {
-	ss := strings.Split(line, "|")
-	chapter, err := strconv.ParseInt(ss[1], 10, 0)
+func loadLinesFromFile(fileLocation string) (lines []string) {
+	f, err := os.Open(fileLocation)
+	defer f.Close()
 	if err != nil {
-		log.Fatalln(err)
-	}
-	number, err := strconv.ParseInt(ss[2], 10, 0)
-	if err != nil {
-		log.Fatalln(err)
+		fmt.Errorf("Error while trying to open file: %w", err)
+		os.Exit(1)
 	}
 
-	return verse{
-		book:    ss[0],
-		chapter: int(chapter),
-		number:  int(number),
-		content: ss[3],
-	}
-}
+	fScanner := bufio.NewScanner(f)
 
-func loadVersesFromFile(bibleFileLocation string) (verses []string, err error) {
-	bf, err := os.Open(bibleFileLocation)
-	defer bf.Close()
-	if err != nil {
-		return []string{}, err
+	lines = make([]string, 0)
+	for fScanner.Scan() {
+		newLine := fScanner.Text()
+
+		lines = append(lines, newLine)
+	}
+	if err := fScanner.Err(); err != nil {
+		fmt.Errorf("Error reading standard input: %w", err)
+		os.Exit(1)
 	}
 
-	bfScanner := bufio.NewScanner(bf)
-
-	verses = make([]string, 0)
-	for bfScanner.Scan() {
-		verse := bfScanner.Text()
-
-		verses = append(verses, verse)
-	}
-	if err := bfScanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "reading standard input: ", err)
-	}
-
-	return verses, err
+	return lines
 }

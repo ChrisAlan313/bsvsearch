@@ -1,10 +1,6 @@
-Gen|1|1|In principio creavit Deus c&#230;lum et terram.
-Gen|1|2|Terra autem erat inanis et vacua, et tenebr&#230; erant super faciem abyssi: et spiritus Dei ferebatur super aquas.
-Gen|1|3|Dixitque Deus: Fiat lux. Et facta est lux.
-Gen|1|4|Et vidit Deus lucem quod esset bona: et divisit lucem a tenebris.
-Gen|1|5|Appellavitque lucem Diem, et tenebras Noctem: factumque est vespere et mane, dies unus.
-Gen|1|6|Dixit quoque Deus: Fiat firmamentum in medio aquarum: et dividat aquas ab aquis.
-Gen|1|7|Et fecit Deus firmamentum, divisitque aquas, qu&#230; erant sub firmamento, ab his, qu&#230; erant super firmamentum. Et factum est ita.
-Gen|1|8|Vocavitque Deus firmamentum, C&#230;lum: et factum est vespere et mane, dies secundus.
-Gen|1|9|Dixit vero Deus: Congregentur aqu&#230;, qu&#230; sub c&#230;lo sunt, in locum unum: et appareat arida. Et factum est ita.
-Gen|1|10|Et vocavit Deus aridam Terram, congregationesque aquarum appellavit Maria. Et vidit Deus quod esset bonum.
+Gen|1|1|In principio creavit Deus cælum et terram.
+Gen|1|2|Terra autem erat inanis et vacua, et tenebræ erant super faciem abyssi: et spiritus Dei ferebatur super aquas.
+Ma2|1|21|Et jussit eos haurire, et afferre sibi: et sacrificia quæ imposita erant, jussit sacerdos Nehemias aspergi ipsa aqua: et ligna, et quæ erant superposita.
+Ma2|1|22|Utque hoc factum est, et tempus affuit quo sol refulsit, qui prius erat in nubilo, accensus est ignis magnus, ita ut omnes mirarentur.
+Joh|1|1|[In principio erat Verbum,<BR> et Verbum erat apud Deum,<BR> et Deus erat Verbum.<BR>
+Joh|1|2|Hoc erat in principio apud Deum.<BR>
