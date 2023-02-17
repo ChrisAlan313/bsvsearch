@@ -1,39 +1,18 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 )
 
 func main() {
 	bsv := NewBible("Biblia Sacra Vulgata")
-	content := loadLinesFromFile("./vuldat_test.txt")
+	content := loadLinesFromFile("./vuldat.txt")
 	bsv, _ = bsv.Load(content)
 
-	fmt.Printf("Bible: %v\n", bsv)
-}
-
-func loadLinesFromFile(fileLocation string) (lines []string) {
-	f, err := os.Open(fileLocation)
-	defer f.Close()
-	if err != nil {
-		fmt.Errorf("Error while trying to open file: %w", err)
-		os.Exit(1)
+	fmt.Printf("Jo3 verses:\n")
+	jo3Spec := BookSpecification{"Jo3"}
+	bf := BetterFilter{}
+	for _, v := range bf.Filter(bsv.verses, jo3Spec) {
+		fmt.Printf(" - %v is in Jo3", v)
 	}
-
-	fScanner := bufio.NewScanner(f)
-
-	lines = make([]string, 0)
-	for fScanner.Scan() {
-		newLine := fScanner.Text()
-
-		lines = append(lines, newLine)
-	}
-	if err := fScanner.Err(); err != nil {
-		fmt.Errorf("Error reading standard input: %w", err)
-		os.Exit(1)
-	}
-
-	return lines
 }

@@ -12,13 +12,13 @@ func TestNewBible(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want bible
+		want Bible
 	}{
 		{
-			name: "creates bible empt struct",
+			name: "creates Bible with empty struct",
 			args: args{"some translation"},
-			want: bible{
-				translation: "some translation", verses: []verse{},
+			want: Bible{
+				translation: "some translation", verses: []Verse{},
 			},
 		},
 	}
@@ -44,7 +44,7 @@ func Test_parseLine(t *testing.T) {
 		wantContent string
 	}{
 		{
-			name:        "parses line of bible txt input",
+			name:        "parses line of Bible txt input",
 			args:        args{line: "Gen|1|1|In principio creavit Deus cælum et terram."},
 			wantBook:    "Gen",
 			wantChapter: 1,
@@ -52,7 +52,7 @@ func Test_parseLine(t *testing.T) {
 			wantContent: "In principio creavit Deus cælum et terram.",
 		},
 		{
-			name:        "parses line of bible txt input with '[' and '<br>'",
+			name:        "parses line of Bible txt input with '[' and '<br>'",
 			args:        args{line: "Joh|1|1|[In principio erat Verbum,<BR> et Verbum erat apud Deum,<BR> et Deus erat Verbum.<BR>"},
 			wantBook:    "Joh",
 			wantChapter: 1,
@@ -79,20 +79,20 @@ func Test_parseLine(t *testing.T) {
 	}
 }
 
-func Test_bible_Load(t *testing.T) {
+func Test_Bible_Load(t *testing.T) {
 	type args struct {
 		content []string
 	}
 	tests := []struct {
 		name    string
-		b       bible
+		b       Bible
 		args    args
-		want    bible
+		want    Bible
 		wantErr bool
 	}{
 		{
 			name: "loads from content slice of strings representing lines of a file",
-			b:    bible{translation: "some translation", verses: make([]verse, 0, 36000)},
+			b:    Bible{translation: "some translation", verses: make([]Verse, 0, 36000)},
 			args: args{[]string{
 				"Gen|1|1|In principio creavit Deus cælum et terram.",
 				"Gen|1|2|Terra autem erat inanis et vacua, et tenebræ erant super faciem abyssi: et spiritus Dei ferebatur super aquas.",
@@ -101,9 +101,9 @@ func Test_bible_Load(t *testing.T) {
 				"Joh|1|1|[In principio erat Verbum,<BR> et Verbum erat apud Deum,<BR> et Deus erat Verbum.<BR>",
 				"Joh|1|2|Hoc erat in principio apud Deum.<BR>"},
 			},
-			want: bible{
+			want: Bible{
 				translation: "some translation",
-				verses: []verse{
+				verses: []Verse{
 					{"Gen", 1, 1, "In principio creavit Deus cælum et terram."},
 					{"Gen", 1, 2, "Terra autem erat inanis et vacua, et tenebræ erant super faciem abyssi: et spiritus Dei ferebatur super aquas."},
 					{"Ma2", 1, 21, "Et jussit eos haurire, et afferre sibi: et sacrificia quæ imposita erant, jussit sacerdos Nehemias aspergi ipsa aqua: et ligna, et quæ erant superposita."},
@@ -119,11 +119,42 @@ func Test_bible_Load(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := tt.b.Load(tt.args.content)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("bible.Load() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Bible.Load() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("bible.Load() = %v, want %v", got, tt.want)
+				t.Errorf("Bible.Load() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_loadLinesFromFile(t *testing.T) {
+	type args struct {
+		fileLocation string
+	}
+	tests := []struct {
+		name      string
+		args      args
+		wantLines []string
+	}{
+		{
+			name: "Returns expected lines from test file",
+			args: args{fileLocation: "./vuldat_test.txt"},
+			wantLines: []string{
+				"Gen|1|1|In principio creavit Deus cælum et terram.",
+				"Gen|1|2|Terra autem erat inanis et vacua, et tenebræ erant super faciem abyssi: et spiritus Dei ferebatur super aquas.",
+				"Ma2|1|21|Et jussit eos haurire, et afferre sibi: et sacrificia quæ imposita erant, jussit sacerdos Nehemias aspergi ipsa aqua: et ligna, et quæ erant superposita.",
+				"Ma2|1|22|Utque hoc factum est, et tempus affuit quo sol refulsit, qui prius erat in nubilo, accensus est ignis magnus, ita ut omnes mirarentur.",
+				"Joh|1|1|[In principio erat Verbum,<BR> et Verbum erat apud Deum,<BR> et Deus erat Verbum.<BR>",
+				"Joh|1|2|Hoc erat in principio apud Deum.<BR>",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if gotLines := loadLinesFromFile(tt.args.fileLocation); !reflect.DeepEqual(gotLines, tt.wantLines) {
+				t.Errorf("loadLinesFromFile() = %v, want %v", gotLines, tt.wantLines)
 			}
 		})
 	}
