@@ -13,9 +13,9 @@ test: lint
 .PHONY:test
 
 run: lint
-	go run bsvsearch.go bible.go specification.go
+	go run bsvsearch.go bible.go specification.go server.go
 .PHONY:run
 
 build: lint
-	go build bsvsearch.go bible.go specification.go
+	go build bsvsearch.go bible.go specification.go server.go
 .PHONY:build
