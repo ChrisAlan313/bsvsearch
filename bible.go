@@ -89,11 +89,11 @@ func parseLine(line string) (book string, chapter int, number int, content strin
 
 func loadLinesFromFile(fileLocation string) (lines []string) {
 	f, err := os.Open(fileLocation)
-	defer f.Close()
 	if err != nil {
-		fmt.Errorf("Error while trying to open file: %w", err)
+		fmt.Printf("Error while trying to open file: %v", err)
 		os.Exit(1)
 	}
+	defer f.Close()
 
 	fScanner := bufio.NewScanner(f)
 
@@ -104,7 +104,7 @@ func loadLinesFromFile(fileLocation string) (lines []string) {
 		lines = append(lines, newLine)
 	}
 	if err := fScanner.Err(); err != nil {
-		fmt.Errorf("Error reading standard input: %w", err)
+		fmt.Printf("Error reading standard input: %v", err)
 		os.Exit(1)
 	}
 

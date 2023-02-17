@@ -5,13 +5,17 @@ fmt:
 .PHONY:fmt
 
 lint: fmt
-	golint ./...
+	golangci-lint run
 .PHONY:lint
 
-vet: fmt
-	go vet ./...
-.PHONY:vet
+test: lint
+	go test
+.PHONY:test
 
-build: vet
-	go build bsvsearch.go
+run: lint
+	go run bsvsearch.go bible.go specification.go
+.PHONY:run
+
+build: lint
+	go build bsvsearch.go bible.go specification.go
 .PHONY:build
