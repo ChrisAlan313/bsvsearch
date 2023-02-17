@@ -7,7 +7,7 @@ import (
 
 func TestBookSpecification_IsSatisfied(t *testing.T) {
 	type args struct {
-		v *Verse
+		v Verse
 	}
 	tests := []struct {
 		name string
@@ -18,13 +18,13 @@ func TestBookSpecification_IsSatisfied(t *testing.T) {
 		{
 			name: "is satisfied",
 			b:    BookSpecification{"Jo3"},
-			args: args{&Verse{"Jo3", 1, 1, "Something profound"}},
+			args: args{Verse{"Jo3", 1, 1, "Something profound"}},
 			want: true,
 		},
 		{
 			name: "is NOT satisfied",
 			b:    BookSpecification{"Jo3"},
-			args: args{&Verse{"Gen", 1, 1, "Something profound"}},
+			args: args{Verse{"Gen", 1, 1, "Something profound"}},
 			want: false,
 		},
 	}
@@ -39,7 +39,7 @@ func TestBookSpecification_IsSatisfied(t *testing.T) {
 
 func TestChapterSpecification_IsSatisfied(t *testing.T) {
 	type args struct {
-		v *Verse
+		v Verse
 	}
 	tests := []struct {
 		name string
@@ -50,13 +50,13 @@ func TestChapterSpecification_IsSatisfied(t *testing.T) {
 		{
 			name: "is satisfied",
 			c:    ChapterSpecification{1},
-			args: args{&Verse{"Gen", 1, 1, "Something profound"}},
+			args: args{Verse{"Gen", 1, 1, "Something profound"}},
 			want: true,
 		},
 		{
 			name: "is NOT satisfied",
 			c:    ChapterSpecification{1},
-			args: args{&Verse{"Gen", 2, 1, "Something profound"}},
+			args: args{Verse{"Gen", 2, 1, "Something profound"}},
 			want: false,
 		},
 	}
@@ -78,7 +78,7 @@ func TestBetterFilter_Filter(t *testing.T) {
 		name string
 		f    *BetterFilter
 		args args
-		want []*Verse
+		want []Verse
 	}{
 		{
 			name: "filters for books",
@@ -92,9 +92,9 @@ func TestBetterFilter_Filter(t *testing.T) {
 					{"Joh", 1, 1, "[In principio erat Verbum,<BR> et Verbum erat apud Deum,<BR> et Deus erat Verbum.<BR>"},
 					{"Joh", 1, 2, "Hoc erat in principio apud Deum.<BR>"},
 				},
-				BookSpecification{"Ma2"},
+				BookSpecification{"Joh"},
 			},
-			want: []*Verse{
+			want: []Verse{
 				{"Joh", 1, 1, "[In principio erat Verbum,<BR> et Verbum erat apud Deum,<BR> et Deus erat Verbum.<BR>"},
 				{"Joh", 1, 2, "Hoc erat in principio apud Deum.<BR>"},
 			},
