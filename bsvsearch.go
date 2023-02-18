@@ -14,9 +14,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fileServer := http.FileServer(http.Dir("./static"))
-	http.Handle("/", fileServer)
-	http.HandleFunc("/hello", helloHandler)
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/", fs)
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/form", bsv.formHandler)
 
 	fmt.Printf("Starting server on port 8080\n")

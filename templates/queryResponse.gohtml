@@ -2,12 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" href="/static/css/style.css">
   <title>BSV Search Results</title>
 </head>
 <body>
   <h1>BSV Search Results</h1>
-    {{range .Verses}}
-    <p>{{.Content}}</p><br>
-    {{end}}
+  <table>
+    <tr>
+      <th>Book</th>
+      <th>Chapter</th>
+      <th>Number</th>
+      <th>Content</th>
+    </tr>
+      {{range .Verses}}
+      <tr>
+        <td>{{.Book}}</td>
+        <td>{{.Chapter}}</td>
+        <td>{{.Number}}</td>
+        <td>{{.Content}}</td>
+      </tr>
+      {{end}}
+  </table>
 </body>
 <html>
