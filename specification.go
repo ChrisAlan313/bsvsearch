@@ -15,11 +15,11 @@ type ChapterSpecification struct {
 type BetterFilter struct{}
 
 func (b BookSpecification) IsSatisfied(v Verse) bool {
-	return v.book == b.book
+	return v.Book == b.book
 }
 
 func (c ChapterSpecification) IsSatisfied(v Verse) bool {
-	return v.chapter == c.chapter
+	return v.Chapter == c.chapter
 }
 
 func (f *BetterFilter) Filter(verses []Verse, spec Specification) []Verse {

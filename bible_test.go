@@ -7,7 +7,7 @@ import (
 
 func TestNewBible(t *testing.T) {
 	type args struct {
-		translation string
+		Translation string
 	}
 	tests := []struct {
 		name string
@@ -18,13 +18,13 @@ func TestNewBible(t *testing.T) {
 			name: "creates Bible with empty struct",
 			args: args{"some translation"},
 			want: Bible{
-				translation: "some translation", verses: []Verse{},
+				Translation: "some translation", Verses: []Verse{},
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := NewBible(tt.args.translation); !reflect.DeepEqual(got, tt.want) {
+			if got := NewBible(tt.args.Translation); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("NewBible() = %v, want %v", got, tt.want)
 			}
 		})
@@ -92,7 +92,7 @@ func Test_Bible_Load(t *testing.T) {
 	}{
 		{
 			name: "loads from content slice of strings representing lines of a file",
-			b:    Bible{translation: "some translation", verses: make([]Verse, 0, 36000)},
+			b:    Bible{Translation: "some translation", Verses: make([]Verse, 0, 36000)},
 			args: args{[]string{
 				"Gen|1|1|In principio creavit Deus cælum et terram.",
 				"Gen|1|2|Terra autem erat inanis et vacua, et tenebræ erant super faciem abyssi: et spiritus Dei ferebatur super aquas.",
@@ -102,8 +102,8 @@ func Test_Bible_Load(t *testing.T) {
 				"Joh|1|2|Hoc erat in principio apud Deum.<BR>"},
 			},
 			want: Bible{
-				translation: "some translation",
-				verses: []Verse{
+				Translation: "some translation",
+				Verses: []Verse{
 					{"Gen", 1, 1, "In principio creavit Deus cælum et terram."},
 					{"Gen", 1, 2, "Terra autem erat inanis et vacua, et tenebræ erant super faciem abyssi: et spiritus Dei ferebatur super aquas."},
 					{"Ma2", 1, 21, "Et jussit eos haurire, et afferre sibi: et sacrificia quæ imposita erant, jussit sacerdos Nehemias aspergi ipsa aqua: et ligna, et quæ erant superposita."},

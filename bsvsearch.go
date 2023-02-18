@@ -11,7 +11,7 @@ func main() {
 	content := loadLinesFromFile("./vuldat.txt")
 	bsv, err := bsv.Load(content)
 	if err != nil {
-		fmt.Printf("Failed to load contents of bible. Quitting: %v", err)
+		log.Fatal(err)
 	}
 
 	fileServer := http.FileServer(http.Dir("./static"))

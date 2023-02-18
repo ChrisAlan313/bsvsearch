@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -10,15 +9,15 @@ import (
 )
 
 type Bible struct {
-	translation string
-	verses      []Verse
+	Translation string
+	Verses      []Verse
 }
 
 type Verse struct {
-	book    string
-	chapter int
-	number  int
-	content string
+	Book    string
+	Chapter int
+	Number  int
+	Content string
 }
 
 func NewBible(translation string) Bible {
@@ -31,13 +30,13 @@ func (b Bible) Load(content []string) (Bible, error) {
 		bo, ch, nu, co := parseLine(str)
 
 		v := Verse{
-			book:    bo,
-			chapter: ch,
-			number:  nu,
-			content: co,
+			Book:    bo,
+			Chapter: ch,
+			Number:  nu,
+			Content: co,
 		}
 
-		b.verses = append(b.verses, v)
+		b.Verses = append(b.Verses, v)
 	}
 
 	return b, nil
@@ -47,9 +46,9 @@ func (b Bible) Load(content []string) (Bible, error) {
 func (b Bible) FilterByBook(bookName string) []Verse {
 	result := make([]Verse, 0)
 
-	for i, v := range b.verses {
-		if v.book == bookName {
-			result = append(result, b.verses[i])
+	for i, v := range b.Verses {
+		if v.Book == bookName {
+			result = append(result, b.Verses[i])
 		}
 	}
 
@@ -60,9 +59,9 @@ func (b Bible) FilterByBook(bookName string) []Verse {
 func (b Bible) FilterByBookAndChapter(bookName string, chapterNumber int) []Verse {
 	result := make([]Verse, 0)
 
-	for i, v := range b.verses {
-		if v.book == bookName && v.chapter == chapterNumber {
-			result = append(result, b.verses[i])
+	for i, v := range b.Verses {
+		if v.Book == bookName && v.Chapter == chapterNumber {
+			result = append(result, b.Verses[i])
 		}
 	}
 
@@ -75,12 +74,12 @@ func parseLine(line string) (book string, chapter int, number int, content strin
 	c, err := strconv.ParseInt(ss[1], 10, 0)
 	chapter = int(c)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
 	}
 	n, err := strconv.ParseInt(ss[2], 10, 0)
 	number = int(n)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
 	}
 	content = ss[3]
 
@@ -90,8 +89,7 @@ func parseLine(line string) (book string, chapter int, number int, content strin
 func loadLinesFromFile(fileLocation string) (lines []string) {
 	f, err := os.Open(fileLocation)
 	if err != nil {
-		fmt.Printf("Error while trying to open file: %v", err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 	defer f.Close()
 
@@ -104,8 +102,7 @@ func loadLinesFromFile(fileLocation string) (lines []string) {
 		lines = append(lines, newLine)
 	}
 	if err := fScanner.Err(); err != nil {
-		fmt.Printf("Error reading standard input: %v", err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 
 	return lines

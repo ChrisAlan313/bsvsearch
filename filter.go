@@ -6,7 +6,7 @@ func (f *Filter) FilterByBook(verses []Verse, book string) []Verse {
 	result := make([]Verse, 0)
 
 	for i, v := range verses {
-		if v.book == book {
+		if v.Book == book {
 			result = append(result, verses[i])
 		}
 	}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 )
 
@@ -33,25 +34,14 @@ func (b Bible) formHandler(w http.ResponseWriter, r *http.Request) {
 
 	bf := BetterFilter{}
 	spec := BookSpecification{bookQuery}
-	verses := bf.Filter(b.verses, spec)
+	verses := bf.Filter(b.Verses, spec)
 
-	content := withHtmlBoilerplate(verses)
-
-	fmt.Fprint(w, content)
-}
-
-func withHtmlBoilerplate(verses []Verse) string {
-	startResponse := "<html><head><title>BSV Search Results</title></head><body><h1>BSV Search Results</h1><p>"
-	vSeparator := "<br/>"
-	endResponse := "</p></body><html>"
-
-	var response string
-	response += startResponse
-	for _, v := range verses {
-		response += v.content
-		response += vSeparator
+	tmpl := template.Must(template.ParseFiles("templates/queryResponse.gohtml"))
+	data := struct {
+		Verses []Verse
+	}{verses}
+	if err := tmpl.Execute(w, data); err != nil {
+		fmt.Fprintf(w, "Execute() err: %v", err)
+		return
 	}
-	response += endResponse
-
-	return response
 }
