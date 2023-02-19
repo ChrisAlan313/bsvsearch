@@ -7,12 +7,7 @@ import (
 )
 
 func main() {
-	bsv := New("Biblia Sacra Vulgata")
-	content := loadLinesFromFile("./vuldat.txt")
-	bsv, err := bsv.load(content)
-	if err != nil {
-		log.Fatal(err)
-	}
+	bsv := New("Biblia Sacra Vulgata", "./vuldat.txt")
 
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)
