@@ -7,9 +7,9 @@ import (
 )
 
 func main() {
-	bsv := NewBible("Biblia Sacra Vulgata")
+	bsv := New("Biblia Sacra Vulgata")
 	content := loadLinesFromFile("./vuldat.txt")
-	bsv, err := bsv.Load(content)
+	bsv, err := bsv.load(content)
 	if err != nil {
 		log.Fatal(err)
 	}

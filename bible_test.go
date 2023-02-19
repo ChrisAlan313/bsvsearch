@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewBible(t *testing.T) {
+func TestNew(t *testing.T) {
 	type args struct {
 		Translation string
 	}
@@ -24,8 +24,8 @@ func TestNewBible(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := NewBible(tt.args.Translation); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("NewBible() = %v, want %v", got, tt.want)
+			if got := New(tt.args.Translation); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("New() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -79,7 +79,7 @@ func Test_parseLine(t *testing.T) {
 	}
 }
 
-func Test_Bible_Load(t *testing.T) {
+func Test_Bible_load(t *testing.T) {
 	type args struct {
 		content []string
 	}
@@ -117,13 +117,13 @@ func Test_Bible_Load(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := tt.b.Load(tt.args.content)
+			got, err := tt.b.load(tt.args.content)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Bible.Load() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Bible.load() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Bible.Load() = %v, want %v", got, tt.want)
+				t.Errorf("Bible.load() = %v, want %v", got, tt.want)
 			}
 		})
 	}

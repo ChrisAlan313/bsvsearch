@@ -20,12 +20,12 @@ type Verse struct {
 	Content string
 }
 
-func NewBible(translation string) Bible {
+func New(translation string) Bible {
 	emptyVerses := make([]Verse, 0, 36000)
 	return Bible{translation, emptyVerses}
 }
 
-func (b Bible) Load(content []string) (Bible, error) {
+func (b Bible) load(content []string) (Bible, error) {
 	for _, str := range content {
 		bo, ch, nu, co := parseLine(str)
 
@@ -40,32 +40,6 @@ func (b Bible) Load(content []string) (Bible, error) {
 	}
 
 	return b, nil
-}
-
-// If results aren't being returned as expected, check capitalization!
-func (b Bible) FilterByBook(bookName string) []Verse {
-	result := make([]Verse, 0)
-
-	for i, v := range b.Verses {
-		if v.Book == bookName {
-			result = append(result, b.Verses[i])
-		}
-	}
-
-	return result
-}
-
-// If results aren't being returned as expected, check capitalization!
-func (b Bible) FilterByBookAndChapter(bookName string, chapterNumber int) []Verse {
-	result := make([]Verse, 0)
-
-	for i, v := range b.Verses {
-		if v.Book == bookName && v.Chapter == chapterNumber {
-			result = append(result, b.Verses[i])
-		}
-	}
-
-	return result
 }
 
 func parseLine(line string) (book string, chapter int, number int, content string) {
