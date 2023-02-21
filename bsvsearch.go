@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/ChrisAlan313/bible"
 )
 
 func main() {
-	bsv := New("Biblia Sacra Vulgata", "./vuldat.txt")
+	bsv := bible.New("Biblia Sacra Vulgata", "./vuldat.txt")
 
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)

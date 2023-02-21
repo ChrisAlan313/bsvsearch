@@ -3,24 +3,26 @@ package main
 import (
 	"reflect"
 	"testing"
+
+	"github.com/ChrisAlan313/bible"
 )
 
 func TestFilter_FilterByBook(t *testing.T) {
 	type args struct {
-		verses []Verse
+		verses []bible.Verse
 		book   string
 	}
 	tests := []struct {
 		name string
 		f    *Filter
 		args args
-		want []Verse
+		want []bible.Verse
 	}{
 		{
 			name: "filters by book",
 			f:    &Filter{},
 			args: args{
-				[]Verse{
+				[]bible.Verse{
 					{"Gen", 1, 1, "In principio creavit Deus cælum et terram."},
 					{"Gen", 1, 2, "Terra autem erat inanis et vacua, et tenebræ erant super faciem abyssi: et spiritus Dei ferebatur super aquas."},
 					{"Ma2", 1, 21, "Et jussit eos haurire, et afferre sibi: et sacrificia quæ imposita erant, jussit sacerdos Nehemias aspergi ipsa aqua: et ligna, et quæ erant superposita."},
@@ -30,7 +32,7 @@ func TestFilter_FilterByBook(t *testing.T) {
 				},
 				"Ma2",
 			},
-			want: []Verse{
+			want: []bible.Verse{
 				{"Ma2", 1, 21, "Et jussit eos haurire, et afferre sibi: et sacrificia quæ imposita erant, jussit sacerdos Nehemias aspergi ipsa aqua: et ligna, et quæ erant superposita."},
 				{"Ma2", 1, 22, "Utque hoc factum est, et tempus affuit quo sol refulsit, qui prius erat in nubilo, accensus est ignis magnus, ita ut omnes mirarentur."}},
 		},
