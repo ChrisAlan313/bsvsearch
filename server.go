@@ -8,20 +8,22 @@ import (
 	"github.com/ChrisAlan313/bible"
 )
 
-func StartServer() {
-
+type bsvServer struct {
+	bible.Bible
 }
 
-func (b bible.Bible) formHandler(w http.ResponseWriter, r *http.Request) {
+func (s bsvServer) formHandler(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
 	}
 
+	b := s.Bible
+
 	bookQuery := r.FormValue("book")
 
 	bf := bible.BetterFilter{}
-	spec := bible.BookSpecification{bookQuery}
+	spec := bible.BookSpecification{Book: bookQuery}
 	verses := bf.Filter(b.Verses, spec)
 
 	tmpl := template.Must(template.ParseFiles("templates/queryResponse.gohtml"))

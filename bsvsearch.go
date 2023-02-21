@@ -10,11 +10,12 @@ import (
 
 func main() {
 	bsv := bible.New("Biblia Sacra Vulgata", "./vuldat.txt")
+	s := bsvServer{Bible: bsv}
 
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	http.HandleFunc("/form", bsv.formHandler)
+	http.HandleFunc("/form", s.formHandler)
 
 	fmt.Printf("Starting server on port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
